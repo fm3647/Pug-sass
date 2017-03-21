@@ -6,16 +6,22 @@ var gulp = require('gulp'),
   data = require('gulp-data'),
   pug = require('gulp-pug'),
   prefix = require('gulp-autoprefixer'),
+  jshint = require('gulp-jshint'),          // js检测
+  concat = require('gulp-concat'),          // js合并
+  cache = require('gulp-cache'),
+  uglify = require('gulp-uglify'),          // 压缩js文件
+  rename = require('gulp-rename'),          // 重命名
+  imagemin = require('gulp-imagemin'),
   sass = require('gulp-sass'),
+  notify = require('gulp-notify'),
   browserSync = require('browser-sync');
-
 /*
  * Directories here
  */
 var paths = {
-  public: './public/',
+  dist: './dist/',
   sass: './src/sass/',
-  css: './public/css/',
+  css: './dist/css/',
   data: './src/_data/'
 };
 
@@ -78,12 +84,12 @@ gulp.task('sass', function () {
 });
 // Scripts
 gulp.task('scripts', function() {
-  return gulp.src(['src/js/**/*.js','!src/js/lib/*.js'])  // 忽略lib目录里的所有接收文件
+  return gulp.src(['src/js/**/*.js','!src/js/libs/*.js'])  // 忽略lib目录里的所有接收文件
     .pipe(jshint(''))                                     // js检测
     .pipe(jshint.reporter('default'))
     .pipe(concat('all.js'))                               // js合并之后命名
-    .pipe(rename({ suffix: '.min' }))                     // js压缩
-    .pipe(uglify())
+    .pipe(rename({ suffix: '.min' }))                     // js重命名
+    .pipe(uglify())                                       // js压缩
     .pipe(gulp.dest('dist/js'))                           //저장경로
     .pipe(notify({ message: 'Scripts task complete' }));
 });
