@@ -84,7 +84,7 @@ gulp.task('sass', function () {
 });
 // Scripts
 gulp.task('scripts', function() {
-  return gulp.src(['src/js/**/*.js','!src/js/libs/*.js'])  // 忽略lib目录里的所有接收文件
+  return gulp.src(['src/js/**/*.js','!src/js/lib/*.js'])  // 忽略lib目录里的所有接收文件
     .pipe(jshint(''))                                     // js检测
     .pipe(jshint.reporter('default'))
     .pipe(concat('all.js'))                               // js合并之后命名
@@ -113,7 +113,6 @@ gulp.task('assets', function () {
 gulp.task('watch', function () {
   gulp.watch(paths.sass + '**/*.scss', ['sass']);
   gulp.watch('./src/**/*.pug', ['rebuild']);
-  gulp.watch('./src/js/*.js', ['uglify']);
 });
 
 /**
